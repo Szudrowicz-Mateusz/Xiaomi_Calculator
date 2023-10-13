@@ -1,0 +1,108 @@
+﻿<Window x:Class="CalcualtorCS_Z_Lista.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CalcualtorCS_Z_Lista"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="680" Width="427">
+    <Grid Margin="0,0,0,25" Background="Black">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="300"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100" ></ColumnDefinition>
+            <ColumnDefinition Width="100" ></ColumnDefinition>
+            <ColumnDefinition Width="100" ></ColumnDefinition>
+            <ColumnDefinition Width="100" ></ColumnDefinition>
+            <ColumnDefinition Width="100" ></ColumnDefinition>
+
+        </Grid.ColumnDefinitions>
+
+        <ListBox Name="calculationListBox" Grid.ColumnSpan="4" VerticalAlignment="Bottom" Height="300" SelectionChanged="calculationListBox_SelectionChanged">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Right" />
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel VerticalAlignment="Bottom" IsItemsHost="True"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <!-- Bind the ListBox to your List<CalculationItem> in reverse order -->
+            <ListBox.ItemsSource>
+                <Binding Path="calculations" RelativeSource="{RelativeSource AncestorType=Window}" />
+            </ListBox.ItemsSource>
+            <!-- Add a ScrollViewer with the VerticalScrollBarVisibility set to Auto -->
+            <ListBox.Template>
+                <ControlTemplate TargetType="ListBox">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ItemsPresenter/>
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ListBox.Template>
+            <!-- Define a custom ItemTemplate for text color and background color -->
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" Foreground="White" Background="Black">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <!-- Apply a different style to the last item -->
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}" Value="{x:Null}">
+                                        <Setter Property="FontWeight" Value="Bold" />
+                                        <Setter Property="Foreground" Value="White" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <!-- Texbox to appear a numbers in it -->
+        <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" x:Name="inputTextBox" Text="= 0" Background="Black" Foreground="White"
+         VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right"/>
+
+        <!-- 1st row of buttons -->
+        <Button Name="Clear" Height="50" Width="100" Content="AC" Click="Clear_Click" Foreground="Orange" Background="Black" FontSize="20" Grid.Row="2" Grid.Column="0"/>
+        <Button Name="Delete" Height="50" Width="100" Content="DEL" Click="Delete_Click" Foreground="Orange" Background="Black" FontSize="20" Grid.Row="2" Grid.Column="1"/>
+        <Button Name="Percent" Height="50" Width="100" Content="%" Click="Sign_Click" Foreground="Orange" Background="Black" FontSize="20" Grid.Row="2" Grid.Column="2"/>
+        <Button Name="Div" Height="50" Width="100" Content="/" Click="Sign_Click" Foreground="Orange" Background="Black" FontSize="20" Grid.Row="2" Grid.Column="3"/>
+
+        <!-- 2nd row of buttons -->
+        <Button Name="Seven" Height="50" Width="100" Content="7" Click="Number_Click" Foreground="White" Background="Black" FontSize="20" Grid.Row="3" Grid.Column="0"/>
+        <Button Name="Eight" Height="50" Width="100" Content="8" Click="Number_Click" Foreground="White" Background="Black" FontSize="20" Grid.Row="3" Grid.Column="1"/>
+        <Button Name="Nine" Height="50" Width="100" Content="9" Click="Number_Click" Foreground="White" Background="Black" FontSize="20" Grid.Row="3" Grid.Column="2"/>
+        <Button Name="Multiply" Height="50" Width="100" Content="*" Click="Sign_Click" Foreground="Orange" Background="Black" FontSize="20" Grid.Row="3" Grid.Column="3"/>
+
+        <!-- 3rd row of buttons -->
+        <Button Name="Four" Height="50" Width="100" Content="4" Click="Number_Click" Foreground="White" Background="Black" FontSize="20" Grid.Row="4" Grid.Column="0"/>
+        <Button Name="Five" Height="50" Width="100" Content="5" Click="Number_Click" Foreground="White" Background="Black" FontSize="20" Grid.Row="4" Grid.Column="1"/>
+        <Button Name="Six" Height="50" Width="100" Content="6" Click="Number_Click" Foreground="White" Background="Black" FontSize="20" Grid.Row="4" Grid.Column="2"/>
+        <Button Name="Minus" Height="50" Width="100" Content="-" Click="Sign_Click" Foreground="Orange" Background="Black" FontSize="20" Grid.Row="4" Grid.Column="3"/>
+
+        <!-- 4th row of buttons -->
+        <Button Name="One" Height="50" Width="100" Content="1" Click="Number_Click" Foreground="White" Background="Black" FontSize="20" Grid.Row="5" Grid.Column="0"/>
+        <Button Name="Two" Height="50" Width="100" Content="2" Click="Number_Click" Foreground="White" Background="Black" FontSize="20" Grid.Row="5" Grid.Column="1"/>
+        <Button Name="Three" Height="50" Width="100" Content="3" Click="Number_Click" Foreground="White" Background="Black" FontSize="20" Grid.Row="5" Grid.Column="2"/>
+        <Button Name="Plus" Height="50" Width="100" Content="+" Click="Sign_Click" Foreground="Orange" Background="Black" FontSize="20" Grid.Row="5" Grid.Column="3"/>
+
+        <!-- 5th row of buttons -->
+        <Button Name="Turn" Height="50" Width="100" Content="?" Click="Turn_Click" Foreground="Orange" Background="Black" FontSize="20" Grid.Row="6" Grid.Column="0"/>
+        <Button Name="Zero" Height="50" Width="100" Content="0" Click="Number_Click" Foreground="White" Background="Black" FontSize="20" Grid.Row="6" Grid.Column="1"/>
+        <Button Name="Coma" Height="50" Width="100" Content="," Click="Coma_Click" Foreground="White" Background="Black" FontSize="20" Grid.Row="6" Grid.Column="2"/>
+        <Button Name="Equals" Height="50" Width="100" Content="=" Click="Equals_Click" Foreground="Orange" Background="Black" FontSize="20" Grid.Row="6" Grid.Column="3"/>
+
+    </Grid>
+</Window>
